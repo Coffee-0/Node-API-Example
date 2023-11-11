@@ -1,8 +1,10 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 
 const Product = require("./models/productModel");
+const mongoUrl = process.env.MONGO_URL;
 
 app.use(express.json());
 
@@ -81,9 +83,7 @@ app.delete("/products/:id", async (req, res) => {
 
 mongoose.set("strictQuery", false);
 mongoose
-  .connect(
-    "mongodb+srv://admin:<password>@express-api.n7ykngh.mongodb.net/Express-API?retryWrites=true&w=majority"
-  )
+  .connect(mongoUrl)
   .then(() => {
     console.log("connected to Mongo DB");
     app.listen(3000, () => {
